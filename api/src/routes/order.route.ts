@@ -4,5 +4,6 @@ import * as orderController from "../controllers/order.controller";
 const router = Router();
 
 router.post("/", orderController.createOrder);
+router.get("/:id/status", orderController.getOrderStatus);
 
 export default router;
