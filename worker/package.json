@@ -13,6 +13,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+     "worker": "ts-node src/worker.ts",
+    "build": "tsc",
+    "start:worker": "node dist/worker.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
