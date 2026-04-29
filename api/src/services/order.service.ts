@@ -1,6 +1,6 @@
 import { getChannel } from "../lib/rabbitmq";
 import redis from "../lib/redis";
-import { prisma } from "../prisma/client";
+import { prisma } from "../../../prisma/client";
 
 interface OrderItemInput {
   productId: string;

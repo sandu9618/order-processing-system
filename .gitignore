@@ -3,3 +3,5 @@ node_modules
 .env
 
 /api/src/generated
+
+/generated/prisma

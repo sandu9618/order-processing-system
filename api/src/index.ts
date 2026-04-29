@@ -14,7 +14,6 @@ app.use("/api/products", productRoutes);
 const PORT = process.env.PORT || 3000;
 const startServer = async () => {
   await connectRabbitMQ();
-  await redis.connect();
   await redis.ping();
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

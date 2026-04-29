@@ -4,7 +4,7 @@ interface CreateProductInput {
 }
 
 import { products } from "../db/seed";
-import { prisma } from "../prisma/client";
+import { prisma } from "../../../prisma/client";
 
 export const createProduct = async (data: CreateProductInput) => {
   return prisma.product.create({
