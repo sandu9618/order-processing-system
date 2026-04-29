@@ -1,0 +1,18 @@
+export const products = [
+  {
+    name: "Product 1",
+    price: 10.99
+  },
+  {
+    name: "Product 2",
+    price: 20.99
+  },
+  {
+    name: "Product 3",
+    price: 30.99
+  },
+  {
+    name: "Product 4",
+    price: 40.99
+  }
+];
