@@ -17,12 +17,12 @@ export default function OrdersPage() {
   };
 
   const handleOrder = async (productId: string) => {
-    const res = await createOrder("8bf4f110-4ee5-40f2-a971-a757bf7c62e4", productId, 1);
+    const res = await createOrder("c83a7263-3d47-45dd-88db-47fdf1cbac1a", productId, 1);
 
     const newOrder = {
       id: res.id,
       productId,
-      customerId: "8bf4f110-4ee5-40f2-a971-a757bf7c62e4",
+      customerId: "c83a7263-3d47-45dd-88db-47fdf1cbac1a",
       quantity: 1,
       status: "queued",
     };
