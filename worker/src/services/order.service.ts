@@ -4,9 +4,8 @@ import { prisma } from "../../../prisma/client";
 
 export async function setOrderStatus(orderId: string, status: string) {
   console.log(`Setting status for order ${orderId} to ${status}`);
-  await redis.set(`
-    order:${orderId}`, 
-    JSON.stringify({orderId, status, updatedAt: Date.now()}),
+  await redis.set(`order:${orderId}`, 
+    JSON.stringify(status),
     { EX: 60 * 60 });
 
   console.log('Order status set to', status);

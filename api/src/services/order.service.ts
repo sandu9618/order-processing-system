@@ -27,8 +27,9 @@ export const createOrder = async (data: CreateOrderInput) => {
 
 export const getOrderStatus = async (orderId: string) => {
   const cachedStatus = await redis.get(`order:${orderId}`);
+  console.log("Cached status for order ID", orderId, ":", cachedStatus);
   if (cachedStatus) {
-    return cachedStatus;
+    return JSON.parse(cachedStatus);
   }
   const order = await prisma.order.findUnique({
     where: { id: orderId },

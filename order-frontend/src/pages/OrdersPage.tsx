@@ -41,8 +41,9 @@ export default function OrdersPage() {
           o.id === orderId ? { ...o, status: data.status } : o
         )
       );
+      console.log("Polled status for order ID", orderId, ":", data);
 
-      if (data.status === "done" || data.status === "failed") {
+      if (data.status === "completed" || data.status === "failed") {
         clearInterval(interval);
       }
     }, 2000);
