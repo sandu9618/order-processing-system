@@ -10,3 +10,12 @@ export const createCustomer = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to create customer" });
   }
 };
+
+export const getAllCustomers = async (req: Request, res: Response) => {
+  try {
+    const customers = await customerService.getAllCustomers();
+    res.json(customers);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch customers" });
+  }
+}

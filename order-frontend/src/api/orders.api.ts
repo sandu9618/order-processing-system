@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 export async function fetchProducts() {
   const res = await fetch(`${BASE_URL}/products`);
@@ -21,5 +21,10 @@ export async function createOrder(customerId: string, productId: string, quantit
 
 export async function getOrderStatus(orderId: string) {
   const res = await fetch(`${BASE_URL}/orders/${orderId}/status`);
+  return res.json();
+}
+
+export async function fetchCustomers() {
+  const res = await fetch(`${BASE_URL}/customers`);
   return res.json();
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Order } from "../types/order";
-import { createOrder, fetchProducts, getOrderStatus } from "../api/orders.api";
+import { createOrder, fetchCustomers, fetchProducts, getOrderStatus } from "../api/orders.api";
 import ProductList from "../components/ProductList";
 
 export default function OrdersPage() {
@@ -17,12 +17,13 @@ export default function OrdersPage() {
   };
 
   const handleOrder = async (productId: string) => {
-    const res = await createOrder("c83a7263-3d47-45dd-88db-47fdf1cbac1a", productId, 1);
+    const customers = await fetchCustomers();
+    const res = await createOrder(customers[0].id, productId, 1);
 
     const newOrder = {
       id: res.id,
       productId,
-      customerId: "c83a7263-3d47-45dd-88db-47fdf1cbac1a",
+      customerId: customers[0].id,
       quantity: 1,
       status: "queued",
     };

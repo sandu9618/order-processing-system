@@ -16,3 +16,43 @@ services:
       POSTGRES_DB: "orderdb"
     ports:
       - "5432:5432"
+    
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rabbitmq
+      - redis
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/orderdb
+      RABBITMQ_URL: amqp://rabbitmq
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    
+  worker:
+    build:
+      context: .
+      dockerfile: worker/Dockerfile
+    depends_on:
+      - rabbitmq
+      - redis
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/orderdb
+      REDIS_URL: redis://redis:6379
+      RABBITMQ_URL: amqp://rabbitmq
+
+  frontend:
+    build:
+      context: .
+      dockerfile: order-frontend/Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+    environment:
+      VITE_API_URL: http://localhost:3000/api

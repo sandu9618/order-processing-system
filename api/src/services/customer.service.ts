@@ -9,3 +9,7 @@ export const createCustomer = async (name: string, email: string) => {
   });
   return customer;
 }
+
+export const getAllCustomers = async () => {
+  return prisma.customer.findMany();
+}
