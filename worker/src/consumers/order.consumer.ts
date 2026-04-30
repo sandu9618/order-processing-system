@@ -3,14 +3,20 @@ import { setOrderStatus } from '../services/order.service';
 import { processOrderSteps } from '../services/business.service';
 
 export function consumeOrders(channel: Channel) {
+  console.log("Waiting for orders...");
   channel.prefetch(1);
 
   channel.consume('orders', async (msg) => {
-    if (!msg) return;
+    console.log("Received message:", msg?.content.toString());
+    if (!msg) {
+      console.warn("Received null message, ignoring.");
+      return
+    };
 
     const {orderId, retryCount = 0} = JSON.parse(
       msg.content.toString()
     );
+    console.log(`Processing order ${orderId}, retry count: ${retryCount}`);
 
     try {
       await setOrderStatus(orderId, 'processing');

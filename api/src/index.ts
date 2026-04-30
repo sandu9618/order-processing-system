@@ -1,15 +1,18 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import orderRoutes from "./routes/order.route";
 import productRoutes from "./routes/product.route";
+import customerRoutes from "./routes/customer.route";
 import { connectRabbitMQ } from "./lib/rabbitmq";
 import redis from "./lib/redis";
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use("/api/orders", orderRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/customers", customerRoutes);
 
 const PORT = process.env.PORT || 3000;
 const startServer = async () => {

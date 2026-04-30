@@ -2,37 +2,26 @@ import { getChannel } from "../lib/rabbitmq";
 import redis from "../lib/redis";
 import { prisma } from "../../../prisma/client";
 
-interface OrderItemInput {
-  productId: string;
-  quantity: number;
-}
-
 interface CreateOrderInput {
   customerId: string;
-  orderItems: OrderItemInput[];
+  productId: string;
+  quantity: number;
 }
 
 export const createOrder = async (data: CreateOrderInput) => {
   const order = await prisma.order.create({
     data: {
       customerId: data.customerId,
+      productId: data.productId,
+      quantity: data.quantity,
       status: "queued",
     },
   });
-  await Promise.all(data.orderItems.map(item => {
-    return prisma.orderItem.create({
-      data: {
-        orderId: order.id,
-        productId: item.productId,
-        quantity: item.quantity,
-      },
-    });
-  }));
   //Save to redis
   redis.set(`order:${order.id}`, JSON.stringify(order.status));
 
   //Enqueue order for processing
-  getChannel().sendToQueue("order_queue", Buffer.from(order.id), { persistent: true });
+  getChannel().sendToQueue("orders", Buffer.from(JSON.stringify({ orderId: order.id })), { persistent: true });
   return order;
 }
 
