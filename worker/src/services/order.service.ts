@@ -1,6 +1,6 @@
 
 import { redis } from '../lib/redis';
-import { prisma } from "../../../prisma/client";
+import { prisma } from "../../../packages/db/src/client";
 
 export async function setOrderStatus(orderId: string, status: string) {
   console.log(`Setting status for order ${orderId} to ${status}`);

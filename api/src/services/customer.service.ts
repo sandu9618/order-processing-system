@@ -1,4 +1,4 @@
-import { prisma } from "../../../prisma/client";
+import { prisma } from "../../../packages/db/src/client";
 
 export const createCustomer = async (name: string, email: string) => {
   const customer = await prisma.customer.create({
