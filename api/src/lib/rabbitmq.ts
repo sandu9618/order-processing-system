@@ -3,7 +3,7 @@ import amqp from "amqplib";
 let channel: amqp.Channel;
 
 export const connectRabbitMQ = async () => {
-  const conn = await amqp.connect("amqp://localhost");
+  const conn = await amqp.connect(process.env.RABBITMQ_URL || "amqp://localhost");
   channel = await conn.createChannel();
 
   await channel.assertQueue("orders", { durable: true });
